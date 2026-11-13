@@ -136,12 +136,50 @@ if (calendar) {
   renderWeek();
 }
 
+const revealPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+if ("IntersectionObserver" in window && "animate" in Element.prototype) {
+  const activeReveals = new Set();
+  const reveal = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      const target = entry.target;
+      reveal.unobserve(target);
+      if (revealPreference.matches || target.contains(document.activeElement)) continue;
+
+      const photo = target.dataset.reveal === "photo";
+      const animation = target.animate(
+        [{ opacity: 0, transform: `translateY(${photo ? 22 : 14}px)` },
+         { opacity: 1, transform: "translateY(0)" }],
+        { duration: photo ? 590 : 440, easing: "cubic-bezier(.22,.65,.25,1)" }
+      );
+      activeReveals.add(animation);
+      const finish = () => activeReveals.delete(animation);
+      animation.onfinish = finish;
+      animation.oncancel = finish;
+    }
+  }, { rootMargin: "0px 0px -28px 0px" });
+
+  for (const target of document.querySelectorAll("[data-reveal]")) {
+    if (target.getBoundingClientRect().top >= window.innerHeight) reveal.observe(target);
+  }
+
+  revealPreference.addEventListener("change", event => {
+    if (event.matches) for (const animation of activeReveals) animation.cancel();
+  });
+  document.addEventListener("focusin", event => {
+    for (const animation of activeReveals) {
+      if (animation.effect.target.contains(event.target)) animation.cancel();
+    }
+  });
+}
+
 const motion = document.querySelector(".motion");
 const canvas = document.querySelector("#athlete");
 const ctx = canvas?.getContext("2d");
 
 if (ctx) {
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const reducedMotion = revealPreference;
   const sticky = motion.querySelector(".motion-sticky");
   const steps = Array.from(motion.querySelectorAll(".motion-steps li"));
   const title = motion.querySelector("#motion-title");
