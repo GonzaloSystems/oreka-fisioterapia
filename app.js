@@ -144,6 +144,12 @@ if (ctx) {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const sticky = motion.querySelector(".motion-sticky");
   const steps = Array.from(motion.querySelectorAll(".motion-steps li"));
+  const title = motion.querySelector("#motion-title");
+  const titleAccent = title.querySelector("em");
+  const sceneTitles = steps.map(step => {
+    const heading = step.querySelector("h3");
+    return [heading.firstChild.textContent, heading.querySelector("span").textContent];
+  });
   const track = motion.querySelector(".motion-track span");
   const clamp = (number, min = 0, max = 1) => Math.max(min, Math.min(max, number));
   const lerp = (start, end, fraction) => start + (end - start) * fraction;
@@ -427,6 +433,9 @@ if (ctx) {
     const progress = reducedMotion.matches ? .16 : clamp((window.scrollY - start) / distance);
     const scene = Math.min(2, Math.floor(progress * 3));
     if (active !== scene) {
+      const [lead, accent] = sceneTitles[scene];
+      title.firstChild.textContent = lead;
+      titleAccent.textContent = accent + ".";
       steps.forEach((step, index) => step.classList.toggle("is-current", index === scene));
       active = scene;
     }

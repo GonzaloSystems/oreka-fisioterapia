@@ -71,7 +71,8 @@ h2 em { font: italic 400 1.055em/.9 var(--serif); letter-spacing: -.078em; }
 .motion-inner { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,3fr); align-items: center; gap: clamp(.8rem,2vw,2rem); padding-block: clamp(1.6rem,5vh,4rem); }
 .motion .dot, .booking .dot { background: var(--acid); }
 .motion h2, .booking h2 { margin-top: 1rem; }
-.motion h2 { font-size: clamp(2rem,4.7vw,5.1rem); }
+.motion h2 { font-size: clamp(2rem,4.35vw,4.7rem); }
+.motion h2 em { display: block; margin-top: .14em; }
 .motion h2 em, .booking h2 em { color: var(--acid); }
 .motion-figure { width: 100%; max-width: min(100%, 120svh); margin-inline: auto; min-width: 0; }
 .motion-figure canvas { display: block; width: 100%; height: auto; aspect-ratio: 1000/480; border-radius: 5px 5px 34px 5px; background: #355449; }
@@ -159,17 +160,20 @@ h2 em { font: italic 400 1.055em/.9 var(--serif); letter-spacing: -.078em; }
   .hero-image figcaption { left: 1.4rem; right: .85rem; bottom: .75rem; gap: .35rem; font-size: .62rem; }
   .service-strip .shell { flex-wrap: wrap; justify-content: space-around; gap: .35rem .55rem; padding-block: .8rem; }
   .service-strip span { gap: .25rem; white-space: normal; }
-  .motion.is-animated { height: 200svh; }
-  .motion-inner { grid-template-columns: 1fr; padding-block: 1.6rem; gap: .5rem; }
-  .motion h2 { font-size: clamp(2rem,8.8vw,4rem); margin-top: .65rem; }
-  .motion h2 br { display: none; }
-  .motion h2 em::before { content: " "; }
-  .motion-figure { max-width: min(100%,70svh); }
+  .motion.is-animated { height: 188svh; }
+  .motion-inner { grid-template-columns: minmax(0,1fr); padding-block: 1.3rem; gap: .8rem; }
+  .motion h2 { font-size: clamp(2.1rem,9.5vw,4rem); margin-top: .65rem; min-height: 1.94em; }
+  .motion h2 em { margin-top: .1em; }
+  .motion-figure { max-width: min(100%,66svh); }
   .motion-figure canvas { aspect-ratio: 1000/640; border-bottom-right-radius: 22px; }
-  .motion-steps { grid-template-columns: 1fr; gap: 0; padding-top: .45rem; }
-  .motion-steps li { padding: .42rem 0; }
-  .motion-steps h3 { font-size: .82rem; margin-bottom: .1rem; }
-  .motion-steps p { font-size: .69rem; }
+  .motion-steps { grid-template-columns: 1fr; gap: .45rem; }
+  .motion-steps li { padding: .5rem 0 0; }
+  .motion-steps h3 { font-size: .92rem; }
+  .motion-steps p { font-size: .88rem; }
+  .motion.is-animated .motion-steps li { grid-area: 1/1; border: 0; visibility: hidden; }
+  .motion.is-animated .motion-steps li.is-current { visibility: visible; }
+  .motion.is-animated .motion-steps h3 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .choice span { min-height: 48px; }
   .sport, .story-grid, .location, .booking-inner { grid-template-columns: 1fr; gap: 1.5rem; }
   .story-copy { grid-row: 1; }
   .team-image { height: clamp(245px,75vw,410px); }
@@ -179,7 +183,7 @@ h2 em { font: italic 400 1.055em/.9 var(--serif); letter-spacing: -.078em; }
   .footer p { order: 3; width: 100%; }
 }
 @media (max-width: 660px) and (max-height: 675px) {
-  .motion-figure { max-width: min(100%,64svh); }
+  .motion-figure { max-width: min(100%,57svh); }
   .motion-inner { padding-block: .85rem; }
 }
 @media (max-width: 345px) {
